@@ -1,0 +1,11 @@
+      -----
+     /  o o \
+    |   \_/  |
+   /  _____  \
+  (_/       \_)
+
+Gamboom presents:
+======================
+    EVENTIUM
+======================
+A platform for creating, managing, and enjoying events!
