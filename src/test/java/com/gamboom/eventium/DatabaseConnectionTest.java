@@ -1,5 +1,6 @@
 package com.gamboom.eventium;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,7 @@ public class DatabaseConnectionTest {
     private DataSource dataSource;
 
     @Test
+    @DisplayName("For testing Neon DB Connection")
     void testDatabaseConnection() {
         try (Connection connection = dataSource.getConnection()) {
             assertNotNull(connection);
