@@ -81,5 +81,47 @@ DB Diagram version 1: https://dbdiagram.io/d/eventium-db-v-1-67a1434a263d6cf9a0e
 ![image](https://github.com/user-attachments/assets/80deeba0-f196-42a5-85e1-00605699727e)
 
 
+SQL-scripts - tables creating
+
+-- Create ENUM type for user roles
+CREATE TYPE user_role AS ENUM ('admin', 'staff', 'member');
+
+-- Create users table with UUID primary key
+CREATE TABLE users (
+user_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+name VARCHAR(255),
+email VARCHAR(255) UNIQUE,
+password VARCHAR(255),
+role user_role,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create events table with UUID primary key
+CREATE TABLE events (
+event_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+title VARCHAR(255),
+description TEXT,
+location VARCHAR(255),
+start_time TIMESTAMP,
+end_time TIMESTAMP,
+created_by UUID REFERENCES users(user_id) ON DELETE CASCADE,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create event_registrations table with UUID primary key and foreign keys
+CREATE TABLE event_registrations (
+event_registration_id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+user_id UUID REFERENCES users(user_id) ON DELETE CASCADE,
+event_id UUID REFERENCES events(event_id) ON DELETE CASCADE,
+registration_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+CONSTRAINT unique_registration UNIQUE (user_id, event_id)
+);
+
+-- Create an index for faster queries on event start times
+CREATE INDEX idx_event_start_time ON events(start_time);
+
+
+
+
 
 
