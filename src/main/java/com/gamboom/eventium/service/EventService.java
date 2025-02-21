@@ -5,10 +5,6 @@ import com.gamboom.eventium.repository.EventRepository;
 import com.gamboom.eventium.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -51,8 +47,14 @@ public class EventService {
                 .orElseThrow(() -> new RuntimeException("Event not found"));
     }
 
-    public void deleteEvent(UUID id) {
-        eventRepository.deleteById(id);
+    public boolean deleteEvent(UUID id) {
+        Optional<Event> event = eventRepository.findById(id);
+        if (event.isPresent()) {
+            eventRepository.delete(event.get());
+            return true;
+        }
+        return false;
     }
+
 
 }

@@ -3,8 +3,10 @@ package com.gamboom.eventium.controller;
 
 import com.gamboom.eventium.model.Event;
 //import com.gamboom.eventium.repository.EventRepository;
+import com.gamboom.eventium.model.User;
 import com.gamboom.eventium.service.EventService;
 //import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,7 +56,9 @@ public class EventController {
 
     @PostMapping
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
-        return ResponseEntity.ok(eventService.createEvent(event));
+        Event createdEvent = eventService.createEvent(event); // ***
+//        return ResponseEntity.ok(eventService.createEvent(event));
+        return ResponseEntity.status(201).body(createdEvent);
     }
 
 //    @PutMapping("/{id}")
@@ -79,9 +83,18 @@ public class EventController {
 //    }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEvent(@PathVariable UUID id) {
-        eventService.deleteEvent(id);
-        return ResponseEntity.noContent().build();
+//    public ResponseEntity<Void> deleteEvent(@PathVariable UUID id) {
+//        eventService.deleteEvent(id);
+//        return ResponseEntity.noContent().build();
+//    }
+    public ResponseEntity<String> deleteEvent(@PathVariable UUID id) {
+        boolean deleted = eventService.deleteEvent(id);
+        if (deleted) {
+            return ResponseEntity.ok("Event deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Event not found");
+        }
     }
+
 
 }
