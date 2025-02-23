@@ -19,7 +19,9 @@ public class EventRegistrationService {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
 
-    public EventRegistrationService(EventRegistrationRepository eventRegistrationRepository, UserRepository userRepository, EventRepository eventRepository) {
+    public EventRegistrationService(EventRegistrationRepository eventRegistrationRepository,
+                                    UserRepository userRepository,
+                                    EventRepository eventRepository) {
         this.eventRegistrationRepository = eventRegistrationRepository;
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
@@ -28,6 +30,7 @@ public class EventRegistrationService {
     // Common response format
     private Map<String, Object> formatResponse(EventRegistration registration) {
         Map<String, Object> response = new HashMap<>();
+        response.put("event_registration_id", registration.getEventRegistrationId().toString());
         response.put("userId", registration.getUser().getUserId().toString());
         response.put("eventId", registration.getEvent().getEventId().toString());
         response.put("registrationDate", registration.getRegistrationTime().toString());
@@ -71,6 +74,10 @@ public class EventRegistrationService {
     public Map<String, Object> updateRegistration(UUID id, Map<String, Object> updates) {
         return eventRegistrationRepository.findById(id)
                 .map(existingRegistration -> {
+                    UUID eventRegistrationId = UUID.fromString((String) updates.get("event_registration_id"));
+                    EventRegistration eventRegistration = eventRegistrationRepository.findById(eventRegistrationId)
+                            .orElseThrow(() -> new RuntimeException("Event registration not found"));
+
                     // Fetch User and Event based on IDs from the request
                     UUID userId = UUID.fromString((String) updates.get("userId"));
                     User user = userRepository.findById(userId)
@@ -89,27 +96,12 @@ public class EventRegistrationService {
                     existingRegistration.setRegistrationTime(registrationTime);
 
                     EventRegistration updatedRegistration = eventRegistrationRepository.save(existingRegistration);
-//                    eventRegistrationRepository.save(existingRegistration);
-//
-//                    // Construct response matching request format
-//                    Map<String, Object> response = new HashMap<>();
-//                    response.put("userId", userId.toString());
-//                    response.put("eventId", eventId.toString());
-//                    response.put("registrationDate", dateStr);
-//
-//                    return response;
                     return formatResponse(updatedRegistration);
                 })
                 .orElseThrow(() -> new RuntimeException("Event registration not found"));
     }
 
     public boolean deleteRegistration(UUID id) {
-//        Optional<EventRegistration> registration = eventRegistrationRepository.findById(id);
-//        if (registration.isPresent()) {
-//            eventRegistrationRepository.delete(registration.get());
-//            return true;
-//        }
-//        return false;
         return eventRegistrationRepository.findById(id)
                 .map(registration -> {
                     eventRegistrationRepository.delete(registration);
