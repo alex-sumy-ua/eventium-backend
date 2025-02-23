@@ -6,7 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -20,8 +23,14 @@ public class EventRegistrationController {
     }
 
     @PostMapping
-    public ResponseEntity<EventRegistration> createRegistration(@RequestBody EventRegistration registration) {
-        return ResponseEntity.ok(eventRegistrationService.createRegistration(registration));
+    public ResponseEntity<EventRegistration> createRegistration(@RequestBody Map<String, Object> requestBody) {
+        UUID userId = UUID.fromString((String) requestBody.get("userId"));
+        UUID eventId = UUID.fromString((String) requestBody.get("eventId"));
+        LocalDateTime registrationTime = requestBody.containsKey("registrationDate")
+                ? LocalDateTime.parse((String) requestBody.get("registrationDate"))
+                : LocalDateTime.now();
+        EventRegistration registration = eventRegistrationService.createRegistration(userId,eventId, registrationTime);
+        return ResponseEntity.status(HttpStatus.CREATED).body(registration);
     }
 
     @GetMapping
@@ -31,11 +40,16 @@ public class EventRegistrationController {
 
     @GetMapping("/{id}")
     public ResponseEntity<EventRegistration> getRegistrationById(@PathVariable UUID id) {
-        return ResponseEntity.ok(eventRegistrationService.getRegistrationById(id));
+        Optional<EventRegistration> registration = eventRegistrationService.getRegistrationById(id);
+        return registration
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EventRegistration> updateRegistration(@PathVariable UUID id, @RequestBody EventRegistration updatedRegistration) {
+    public ResponseEntity<EventRegistration> updateRegistration(@PathVariable UUID id,
+                                                                @RequestBody EventRegistration updatedRegistration) {
         return ResponseEntity.ok(eventRegistrationService.updateRegistration(id, updatedRegistration));
     }
 
