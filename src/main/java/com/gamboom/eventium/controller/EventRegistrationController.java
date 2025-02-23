@@ -48,9 +48,9 @@ public class EventRegistrationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EventRegistration> updateRegistration(@PathVariable UUID id,
-                                                                @RequestBody EventRegistration updatedRegistration) {
-        return ResponseEntity.ok(eventRegistrationService.updateRegistration(id, updatedRegistration));
+    public ResponseEntity<Map<String, Object>> updateRegistration(@PathVariable UUID id,
+                                                                  @RequestBody Map<String, Object> updates) {
+        return ResponseEntity.ok(eventRegistrationService.updateRegistration(id, updates));
     }
 
     @DeleteMapping("/{id}")
