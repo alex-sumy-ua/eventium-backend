@@ -23,27 +23,24 @@ public class EventRegistrationController {
     }
 
     @PostMapping
-    public ResponseEntity<EventRegistration> createRegistration(@RequestBody Map<String, Object> requestBody) {
-        UUID userId = UUID.fromString((String) requestBody.get("userId"));
-        UUID eventId = UUID.fromString((String) requestBody.get("eventId"));
-        LocalDateTime registrationTime = requestBody.containsKey("registrationDate")
-                ? LocalDateTime.parse((String) requestBody.get("registrationDate"))
-                : LocalDateTime.now();
-        EventRegistration registration = eventRegistrationService.createRegistration(userId,eventId, registrationTime);
-        return ResponseEntity.status(HttpStatus.CREATED).body(registration);
+    public ResponseEntity<Map<String, Object>> createRegistration(@RequestBody Map<String, Object> request) {
+        UUID userId = UUID.fromString((String) request.get("userId"));
+        UUID eventId = UUID.fromString((String) request.get("eventId"));
+        LocalDateTime registrationTime = LocalDateTime.parse((CharSequence) request.get("registrationDate"));
+
+        Map<String, Object> createdRegistration = eventRegistrationService.createRegistration(userId, eventId, registrationTime);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdRegistration);
     }
 
     @GetMapping
-    public ResponseEntity<List<EventRegistration>> getAllRegistrations() {
-        return ResponseEntity.ok(eventRegistrationService.getAllRegistrations());
+    public ResponseEntity<List<Map<String, Object>>> getAllRegistrations() {
+        List<Map<String, Object>> registrations = eventRegistrationService.getAllRegistrations();
+        return ResponseEntity.ok(registrations);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EventRegistration> getRegistrationById(@PathVariable UUID id) {
-        Optional<EventRegistration> registration = eventRegistrationService.getRegistrationById(id);
-        return registration
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Map<String, Object>> getRegistrationById(@PathVariable UUID id) {
+        return ResponseEntity.ok(eventRegistrationService.getRegistrationById(id));
 
     }
 
