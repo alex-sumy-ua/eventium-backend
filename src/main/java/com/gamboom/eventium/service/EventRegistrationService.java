@@ -9,9 +9,7 @@ import com.gamboom.eventium.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class EventRegistrationService {
@@ -52,17 +50,37 @@ public class EventRegistrationService {
     public Optional<EventRegistration> getRegistrationById(UUID id) {
         return eventRegistrationRepository.findById(id);
     }
-    public EventRegistration updateRegistration(UUID id, EventRegistration updatedRegistration) {
-        Optional<EventRegistration> existingRegistration = eventRegistrationRepository.findById(id);
-        if (existingRegistration.isPresent()) {
-            EventRegistration registration = existingRegistration.get();
-            registration.setUser(updatedRegistration.getUser());
-            registration.setEvent(updatedRegistration.getEvent());
-            registration.setRegistrationTime(updatedRegistration.getRegistrationTime());
-            return eventRegistrationRepository.save(registration);
-        } else {
-            throw new RuntimeException("Event registration not found");
-        }
+    public Map<String, Object> updateRegistration(UUID id, Map<String, Object> updates) {
+        return eventRegistrationRepository.findById(id)
+                .map(existingRegistration -> {
+                    // Fetch User and Event based on IDs from the request
+                    UUID userId = UUID.fromString((String) updates.get("userId"));
+                    User user = userRepository.findById(userId)
+                            .orElseThrow(() -> new RuntimeException("User not found"));
+
+                    UUID eventId = UUID.fromString((String) updates.get("eventId"));
+                    Event event = eventRepository.findById(eventId)
+                            .orElseThrow(() -> new RuntimeException("Event not found"));
+
+                    String dateStr = (String) updates.get("registrationDate");
+                    LocalDateTime registrationTime = LocalDateTime.parse(dateStr);
+
+                    // Update fields
+                    existingRegistration.setUser(user);
+                    existingRegistration.setEvent(event);
+                    existingRegistration.setRegistrationTime(registrationTime);
+
+                    eventRegistrationRepository.save(existingRegistration);
+
+                    // Construct response matching request format
+                    Map<String, Object> response = new HashMap<>();
+                    response.put("userId", userId.toString());
+                    response.put("eventId", eventId.toString());
+                    response.put("registrationDate", dateStr);
+
+                    return response;
+                })
+                .orElseThrow(() -> new RuntimeException("Event registration not found"));
     }
 
     public boolean deleteRegistration(UUID id) {
