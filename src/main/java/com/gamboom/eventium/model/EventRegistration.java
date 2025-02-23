@@ -1,5 +1,6 @@
 package com.gamboom.eventium.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -16,10 +17,12 @@ public class EventRegistration {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})  // Prevent serialization issues
+        private User user;
 
     @ManyToOne
     @JoinColumn(name = "event_id", referencedColumnName = "event_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Event event;
 
     @Column(name = "registration_time")
