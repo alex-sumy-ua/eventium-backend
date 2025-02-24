@@ -78,7 +78,8 @@ Database
 DB Diagram version 1: https://dbdiagram.io/d/eventium-db-v-1-67a1434a263d6cf9a0e82cd3
 
 
-![image](https://github.com/user-attachments/assets/80deeba0-f196-42a5-85e1-00605699727e)
+![image](https://github.com/user-attachments/assets/2ca705bd-f830-4f4a-a139-533c47a9aec1)
+
 
 
 SQL-scripts - tables creating
@@ -119,6 +120,37 @@ CONSTRAINT unique_registration UNIQUE (user_id, event_id)
 
 -- Create an index for faster queries on event start times
 CREATE INDEX idx_event_start_time ON events(start_time);
+
+
+================================================================================
+
+
+Java Code Base
+
+Model,
+Service, Controller, Repository layers,
+GlobalExceptionHandler have been developed.
+
+
+The fully documented backend API application can be seen while the application is running:
+- http://localhost:8080/v3/api-docs (simple JSON format);
+- http://localhost:8080/swagger-ui/index.html (more readable format).
+
+
+![image](https://github.com/user-attachments/assets/42f1d227-f772-4599-a28a-d011eb1b7db8)
+
+
+![image](https://github.com/user-attachments/assets/64a7a221-8083-4576-ab56-9be1efaad7bc)
+
+
+![image](https://github.com/user-attachments/assets/9184bdad-ad0a-4e7f-a4b7-fa23ffc24bb9)
+
+
+
+
+
+
+
 
 
 
