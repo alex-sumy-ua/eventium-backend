@@ -2,6 +2,8 @@ package com.gamboom.eventium.controller;
 
 import com.gamboom.eventium.model.User;
 import com.gamboom.eventium.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
+@Tag(name = "Users", description = "Operations related to users")
 public class UserController {
 
     private final UserService userService;
@@ -20,6 +23,7 @@ public class UserController {
     }
 
     // Create a new user
+    @Operation(summary = "Create a new user", description = "Registers a new user in the system")
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User createdUser = userService.createUser(user);
@@ -27,12 +31,14 @@ public class UserController {
     }
 
     // Get all users
+    @Operation(summary = "Get all users", description = "Returns a list of all users")
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     // Get user by ID
+    @Operation(summary = "Get user by ID", description = "Fetch a user by their unique ID")
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable UUID id) {
         return userService.getUserById(id)
@@ -41,6 +47,7 @@ public class UserController {
     }
 
     // Update an existing user
+    @Operation(summary = "Update a user", description = "Updates a user data except their unique ID")
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody User updatedUser) {
         User user = userService.updateUser(id, updatedUser);
@@ -48,6 +55,7 @@ public class UserController {
     }
 
     // Delete user by ID
+    @Operation(summary = "Delete a user", description = "Deletes a user by their unique ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable UUID id) {
         boolean deleted = userService.deleteUser(id);
