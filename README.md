@@ -69,8 +69,11 @@ If you have time once you have completed the MVP requirements, consider adding t
 5. Spring Security implement full authentication using the Spring Security framework for secure communication between the backend API and frontend Android app.
 
 
-================================================================================
+======================================================================
 
+Backend
+
+======================================================================
 
 Database
 
