@@ -1,8 +1,12 @@
 package com.gamboom.eventium.service;
 
 import com.gamboom.eventium.model.Event;
+import com.gamboom.eventium.model.Role;
+import com.gamboom.eventium.model.User;
 import com.gamboom.eventium.repository.EventRepository;
 import com.gamboom.eventium.repository.UserRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,7 +25,18 @@ public class EventService {
         this.userRepository = userRepository;
     }
 
-    public Event createEvent(Event event) {
+    public Event createEvent(Event event, @AuthenticationPrincipal OAuth2User principal) {
+        if (event.getCreatedBy() == null && principal != null) {
+            String email = principal.getAttribute("email");
+            User createdBy = new User();
+            createdBy.setEmail(email);
+            createdBy.setName(principal.getAttribute("name"));
+            if (createdBy.getRole() == null) {
+                createdBy.setRole(Role.MEMBER); // Default role
+            }
+            event.setCreatedBy(createdBy);
+        }
+
         event.setCreatedAt(LocalDateTime.now()); // Set createdAt timestamp
         return eventRepository.save(event);
     }

@@ -65,7 +65,7 @@ public class User {
     }
 
     public void setRole(Role role) {
-        this.role = role;
+        this.role = role != null ? role : Role.MEMBER; // Ensure role is never null
     }
 
     public LocalDateTime getCreatedAt() {
@@ -73,7 +73,7 @@ public class User {
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
     }
 
 }

@@ -28,7 +28,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "created_by", referencedColumnName = "user_id")
-    private User created_by;
+    private User createdBy;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -83,12 +83,12 @@ public class Event {
         this.endTime = endTime;
     }
 
-    public User getCreated_by() {
-        return created_by;
+    public User getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreated_by(User created_by) {
-        this.created_by = created_by;
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 
     public LocalDateTime getCreatedAt() {
