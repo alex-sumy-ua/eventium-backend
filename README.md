@@ -125,7 +125,7 @@ CONSTRAINT unique_registration UNIQUE (user_id, event_id)
 CREATE INDEX idx_event_start_time ON events(start_time);
 
 
-================================================================================
+===============================================================================
 
 
 Java Code Base
@@ -149,7 +149,108 @@ The fully documented backend API application can be seen while the application i
 ![image](https://github.com/user-attachments/assets/9184bdad-ad0a-4e7f-a4b7-fa23ffc24bb9)
 
 
+===============================================================================
 
+
+GitHub OAuth2 Authentication
+
+
+This project uses GitHub OAuth2 for user authentication. Users can log in using their GitHub accounts, and the application securely retrieves their profile information (e.g., name and email).
+
+Steps to Implement GitHub OAuth2
+Register the Application on GitHub:
+
+Go to GitHub Developer Settings.
+
+Create a new OAuth app with the following details:
+
+Homepage URL: http://localhost:8080
+
+Authorization callback URL: http://localhost:8080/login/oauth2/code/github
+
+Save the Client ID and Client Secret.
+
+Configure GitHub OAuth in application.properties:
+
+spring.security.oauth2.client.registration.github.client-id=your-client-id
+spring.security.oauth2.client.registration.github.client-secret=your-client-secret
+spring.security.oauth2.client.registration.github.scope=read:user,user:email
+spring.security.oauth2.client.registration.github.redirect-uri={baseUrl}/login/oauth2/code/{registrationId}
+Enable OAuth2 in Spring Security:
+
+Configure SecurityConfig to enable OAuth2 login and secure endpoints:
+
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+http
+.csrf(csrf -> csrf.disable())
+.authorizeHttpRequests(auth -> auth
+.requestMatchers("/", "/login**", "/error**").permitAll()
+.anyRequest().authenticated()
+)
+.oauth2Login(oauth2 -> oauth2
+.loginPage("/login")
+.defaultSuccessUrl("/home", true)
+)
+.logout(logout -> logout
+.logoutUrl("/logout")
+.logoutSuccessUrl("/")
+.permitAll()
+);
+return http.build();
+}
+
+
+Create Login and Home Pages:
+
+login.html: Provides a button to log in with GitHub.
+
+home.html: Displays the user’s name and email after successful login.
+
+Handle User Details:
+
+Use the @AuthenticationPrincipal OAuth2User annotation in the HomeController to retrieve user details:
+
+@GetMapping("/home")
+public String home(Model model, @AuthenticationPrincipal OAuth2User principal) {
+if (principal != null) {
+model.addAttribute("name", principal.getAttribute("name"));
+model.addAttribute("email", principal.getAttribute("email"));
+}
+return "home";
+}
+
+
+Test the Integration:
+
+Start the application and navigate to http://localhost:8080.
+
+Click Login with GitHub to authenticate.
+
+After logging in, you’ll be redirected to the home page, which displays your GitHub profile details.
+
+Key Features
+Secure Authentication: Uses GitHub OAuth2 for secure user login.
+
+User Details: Retrieves and displays the user’s name and email.
+
+Logout Functionality: Allows users to log out and redirects them to the home page.
+
+Dependencies
+
+spring-boot-starter-oauth2-client
+
+spring-boot-starter-security
+
+spring-boot-starter-thymeleaf (for rendering HTML templates)
+
+Usage
+
+Log in with GitHub.
+
+View your profile details on the home page.
+
+Log out when done.
 
 
 
