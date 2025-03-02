@@ -45,21 +45,37 @@ The following technologies and tools are suggestions, not requirements:
 Backend technologies, sub-technologies and tools:
 
 • IntelliJ Idea
+
 • Maven
+
 • Java 17
+
 • Java EE
+
 • GitHub
+
 • NeonDB
+
 • https://dbdiagram.io/
+
 • JDBC
+
 • PostgreSQL
+
 • Spring Boot, https://start.spring.io/
+
 • JUnit
+
 • GitHub OAuth2
+
 • PGAdmin
+
 • Postman
+
 • Swagger
+
 • OpenAPI
+
 • Google Calendar
 
 
