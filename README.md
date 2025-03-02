@@ -81,6 +81,8 @@ Backend technologies, sub-technologies and tools:
 
 
 UI Requirements
+
+
 • Design should be responsive and adapt well across various mobile device screen sizes.
 
 • Ensure accessibility for users with disabilities (e.g., support screen readers, voice navigation).
@@ -92,6 +94,7 @@ UI Requirements
 
 
 Optional Extensions
+
 
 If you have time once you have completed the MVP requirements, consider adding the following features:
 
