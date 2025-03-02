@@ -42,8 +42,8 @@ public class EventController {
 
     @Operation(summary = "Create a new event", description = "Registers a new event in the system")
     @PostMapping
-    public ResponseEntity<Event> createEvent(@RequestBody Event event, @AuthenticationPrincipal OAuth2User principal) {
-        Event createdEvent = eventService.createEvent(event, principal);
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+        Event createdEvent = eventService.createEvent(event);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEvent);
     }
 

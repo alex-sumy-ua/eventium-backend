@@ -1,12 +1,15 @@
 package com.gamboom.eventium.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Table(name = "events")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Exclude these fields from the response
 public class Event {
 
     @Id
@@ -26,9 +29,8 @@ public class Event {
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
-    @ManyToOne
-    @JoinColumn(name = "created_by", referencedColumnName = "user_id")
-    private User createdBy;
+    @Column(name = "created_by")
+    private UUID createdBy; // This is a UUID
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -83,11 +85,11 @@ public class Event {
         this.endTime = endTime;
     }
 
-    public User getCreatedBy() {
+    public UUID getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(User createdBy) {
+    public void setCreatedBy(UUID createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -99,4 +101,8 @@ public class Event {
         this.createdAt = createdAt;
     }
 
+    // Custom setter for created_by field
+    public void setCreated_by(UUID createdBy) {
+        this.createdBy = createdBy;
+    }
 }
