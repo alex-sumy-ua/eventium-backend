@@ -1,18 +1,18 @@
 package com.gamboom.eventium.service;
 
 import com.gamboom.eventium.model.Event;
-import com.gamboom.eventium.model.Role;
 import com.gamboom.eventium.model.User;
 import com.gamboom.eventium.repository.EventRepository;
 import com.gamboom.eventium.repository.UserRepository;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+//import org.slf4j.LoggerFactory;
+// import org. slf4j. Logger;
 
 @Service
 public class EventService {
@@ -25,20 +25,29 @@ public class EventService {
         this.userRepository = userRepository;
     }
 
-    public Event createEvent(Event event, @AuthenticationPrincipal OAuth2User principal) {
-        if (event.getCreatedBy() == null && principal != null) {
-            String email = principal.getAttribute("email");
-            User createdBy = new User();
-            createdBy.setEmail(email);
-            createdBy.setName(principal.getAttribute("name"));
-            if (createdBy.getRole() == null) {
-                createdBy.setRole(Role.MEMBER); // Default role
+    public Event createEvent(Event event) {
+//        Logger logger = LoggerFactory.getLogger(EventService.class);
+        // Log the event's createdBy field before assignment
+//        logger.info("Event createdBy before assignment: {}", event.getCreatedBy());
+        // Fetch the created_by user ID from the event object
+        UUID createdByUserId = event.getCreatedBy();
+        // Validate that the user exists in the database
+        if (createdByUserId != null) {
+            Optional<User> existingUser = userRepository.findById(createdByUserId);
+            if (existingUser.isEmpty()) {
+//                logger.error("User not found for ID: {}", createdByUserId);
+                throw new RuntimeException("User not found in the database.");
             }
-            event.setCreatedBy(createdBy);
+        } else {
+//            logger.warn("CreatedBy user ID is null.");
         }
-
-        event.setCreatedAt(LocalDateTime.now()); // Set createdAt timestamp
-        return eventRepository.save(event);
+        // Set the createdAt timestamp
+        event.setCreatedAt(LocalDateTime.now());
+        // Save the event to the database
+        Event savedEvent = eventRepository.save(event);
+//        logger.info("Event saved with ID: {}", savedEvent.getEventId());
+//        logger.info("Event createdBy user ID: {}", savedEvent.getCreatedBy());
+        return savedEvent;
     }
 
     public List<Event> getAllEvents() {
