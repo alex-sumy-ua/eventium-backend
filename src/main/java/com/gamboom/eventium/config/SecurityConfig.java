@@ -17,7 +17,7 @@ public class SecurityConfig {
 /**/         http
 /**/                 .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity (enable it in production)
 /**/                .authorizeHttpRequests(auth -> auth
-/**/                        .requestMatchers("/", "/login**", "/error**", "/swagger-ui/**", "/v3/api-docs/**").permitAll() // Public endpoints
+/**/                        .requestMatchers("/", "/login**", "/error**", "/swagger-ui/**", "/v3/api-docs/**", "/api/users/by-email/**").permitAll() // Public endpoints
 /**/                        .requestMatchers("/api/events/create", "/api/events/update/**", "/api/events/delete/**").hasRole("STAFF") // Staff-only endpoints
 /**/                        .anyRequest().authenticated() // All other endpoints require authentication
 /**/                )
