@@ -86,6 +86,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -94,23 +98,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-<!--			&lt;!&ndash; OWASP Dependency-Check Plugin &ndash;&gt;-->
-<!--			<plugin>-->
-<!--				<groupId>org.owasp</groupId>-->
-<!--				<artifactId>dependency-check-maven</artifactId>-->
-<!--				<version>9.0.9</version>-->
-<!--				<configuration>-->
-<!--					<nvdApiKey>114aa615-b5ca-420d-9622-935b04a36557</nvdApiKey> &lt;!&ndash; Replace with your NVD API key &ndash;&gt;-->
-<!--					<nvdApiDelay>10000</nvdApiDelay> &lt;!&ndash; Delay of 5000 milliseconds (10 seconds) &ndash;&gt;-->
-<!--				</configuration>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<goals>-->
-<!--							<goal>check</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
 		</plugins>
 	</build>
 

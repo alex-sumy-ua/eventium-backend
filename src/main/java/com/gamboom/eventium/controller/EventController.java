@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,7 @@ public class EventController {
 
     @Operation(summary = "Create a new event", description = "Registers a new event in the system")
     @PostMapping
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
         Event createdEvent = eventService.createEvent(event);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEvent);
@@ -49,12 +51,14 @@ public class EventController {
 
     @Operation(summary = "Update an event", description = "Updates an event data except its unique ID")
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     public ResponseEntity<Event> updateEvent(@PathVariable UUID id, @RequestBody Event eventDetails) {
         return ResponseEntity.ok(eventService.updateEvent(id, eventDetails));
     }
 
     @Operation(summary = "Delete an event", description = "Deletes an event by its unique ID")
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     public ResponseEntity<String> deleteEvent(@PathVariable UUID id) {
         boolean deleted = eventService.deleteEvent(id);
         if (deleted) {
