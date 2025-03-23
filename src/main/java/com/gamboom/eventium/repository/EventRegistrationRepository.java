@@ -10,6 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface EventRegistrationRepository extends JpaRepository<EventRegistration, UUID> {
-//    @EntityGraph(attributePaths = {"user", "event"})  // Fetch related entities eagerly
-//    List<EventRegistration> findAll();
+
 }
