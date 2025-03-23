@@ -1,5 +1,6 @@
 package com.gamboom.eventium.controller;
 
+import com.gamboom.eventium.config.GitHubUserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -18,6 +19,9 @@ public class LoginController {
 
     @Autowired
     private final OAuth2AuthorizedClientService clientService;
+
+    @Autowired
+    private GitHubUserService gitHubUserService;
 
     public LoginController(OAuth2AuthorizedClientService clientService) {
         this.clientService = clientService;
@@ -56,21 +60,23 @@ public class LoginController {
                               Authentication authentication,
                               HttpServletResponse response) throws IOException {
         if (principal != null && authentication != null) {
-            // 🧠 Log all GitHub user attributes (for debugging)
+            // Log all GitHub user attributes (for debugging)
             System.out.println("OAuth2 Attributes:");
             principal.getAttributes().forEach((k, v) -> System.out.println(k + " => " + v));
 
-            // 🔑 Get GitHub access token
+            // Get GitHub access token
             OAuth2AuthorizedClient client = clientService.loadAuthorizedClient("github", authentication.getName());
             String accessToken = client != null ? client.getAccessToken().getTokenValue() : null;
 
-            // 📧 Get user email
+            // Get user email
             String email = principal.getAttribute("email");
 
-            // 🧭 Build deep link back to Android
+            // Save token associated with email
+            gitHubUserService.saveToken(email, accessToken);
+
+            // Build deep link back to Android
             if (email != null && accessToken != null) {
                 String redirectUri = "eventium://auth?email=" + email + "&token=" + accessToken;
-                System.out.println("Redirecting to: " + redirectUri);
                 response.sendRedirect(redirectUri);
             } else {
                 System.out.println("Email or token is missing.");
