@@ -221,6 +221,9 @@ This backend meets all MVP requirements:
 - Social media sharing of events
 
 - Push notifications for reminders
+- 
+
+## EVENTIUM - Frontend (Android App): https://github.com/alex-sumy-ua/eventium-frontend.git
 
 
 ## 💼 License
