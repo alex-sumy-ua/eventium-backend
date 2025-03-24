@@ -69,12 +69,15 @@ GitHub OAuth2 login (forwarded from frontend)
 
 ## 📁 API Documentation
 
+```
 Swagger/OpenAPI UI is available at runtime:
-
+```
+```
 JSON format: http://localhost:8080/v3/api-docs
-
+```
+```
 Swagger UI: http://localhost:8080/swagger-ui/index.html
-
+```
 
 ## 📆 Database Schema
 
@@ -88,8 +91,9 @@ PostgreSQL with the following entities:
 
 
 ### 📊 DB Diagram:
+```
 https://dbdiagram.io/d/eventium-db-v-1-67a1434a263d6cf9a0e82cd3
-
+```
 
 ## ✉️ Authentication - GitHub OAuth2
 
@@ -99,9 +103,11 @@ https://dbdiagram.io/d/eventium-db-v-1-67a1434a263d6cf9a0e82cd3
 
 2. Set:
 
-  - Homepage URL: http://localhost:8080
+  - Homepage URL - http://localhost:8080
 
-  - Callback URL: http://10.0.2.2:8080/login/oauth2/code/github
+  - Callback URL - http://10.0.2.2:8080/login/oauth2/code/github
+  
+  - application-prod.properties -
 
 ```
 application.properties
@@ -162,21 +168,25 @@ PostgreSQL (or NeonDB instance)
 ### 2. Setup
 
 Clone the repo:
-
+```
 git clone https://github.com/your-username/eventium-backend.git
 cd eventium-backend
+```
 
 ### 3. Configure application.properties or application.yml:
 
+```
 spring.datasource.url=jdbc:postgresql://your-host:5432/eventium
 spring.datasource.username=your-db-user
 spring.datasource.password=your-db-pass
+```
 
 ### 4. Build and run:
 
+```
 mvn clean install
 mvn spring-boot:run
-
+```
 
 ##  💪 Features
 
@@ -221,10 +231,11 @@ This backend meets all MVP requirements:
 - Social media sharing of events
 
 - Push notifications for reminders
-- 
 
-## EVENTIUM - Frontend (Android App): https://github.com/alex-sumy-ua/eventium-frontend.git
-
+## EVENTIUM - Frontend (Android App):
+```
+https://github.com/alex-sumy-ua/eventium-frontend.git
+```
 
 ## 💼 License
 
@@ -236,4 +247,6 @@ If publishing publicly, you may consider adding an open-source license (e.g., MI
 ## 📅 Author
 
 ### Oleksandr Plachkovskyi (Northcoders student, consultant)
-### plachkovskyy@yahoo.com
+```
+plachkovskyy@yahoo.com
+```
