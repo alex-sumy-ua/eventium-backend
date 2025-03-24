@@ -47,11 +47,10 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .permitAll()
                 );
-
-        // 🔒 Add token-based authentication before standard username-password auth
         http.addFilterBefore(gitHubFilter, UsernamePasswordAuthenticationFilter.class);
         /* ********************************************************************************************************** */
-        /* Temporarily turns off GitHub OAuthentication for testing purposes */
+
+        /* ****** Temporarily turns off GitHub OAuthentication for testing purposes ********************************* */
         //http
         //        .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) // Allow all requests
         //        .csrf(csrf -> csrf.disable())  // Disable CSRF for Postman testing
