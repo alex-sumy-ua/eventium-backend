@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-//import org.slf4j.LoggerFactory;
-// import org. slf4j. Logger;
-
 @Service
 public class EventService {
 
@@ -26,27 +23,25 @@ public class EventService {
     }
 
     public Event createEvent(Event event) {
-//        Logger logger = LoggerFactory.getLogger(EventService.class);
-        // Log the event's createdBy field before assignment
-//        logger.info("Event createdBy before assignment: {}", event.getCreatedBy());
-        // Fetch the created_by user ID from the event object
+
         UUID createdByUserId = event.getCreatedBy();
+
         // Validate that the user exists in the database
         if (createdByUserId != null) {
             Optional<User> existingUser = userRepository.findById(createdByUserId);
             if (existingUser.isEmpty()) {
-//                logger.error("User not found for ID: {}", createdByUserId);
                 throw new RuntimeException("User not found in the database.");
             }
         } else {
 //            logger.warn("CreatedBy user ID is null.");
         }
+
         // Set the createdAt timestamp
         event.setCreatedAt(LocalDateTime.now());
+
         // Save the event to the database
         Event savedEvent = eventRepository.save(event);
-//        logger.info("Event saved with ID: {}", savedEvent.getEventId());
-//        logger.info("Event createdBy user ID: {}", savedEvent.getCreatedBy());
+
         return savedEvent;
     }
 
@@ -79,6 +74,5 @@ public class EventService {
         }
         return false;
     }
-
 
 }

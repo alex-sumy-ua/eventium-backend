@@ -26,8 +26,6 @@ public class User {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    // Getters and Setters
-
     public UUID getUserId() {
         return userId;
     }
