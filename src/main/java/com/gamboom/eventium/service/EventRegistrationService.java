@@ -27,7 +27,6 @@ public class EventRegistrationService {
         this.eventRepository = eventRepository;
     }
 
-    // Common response format
     private Map<String, Object> formatResponse(EventRegistration registration) {
         Map<String, Object> response = new HashMap<>();
         response.put("event_registration_id", registration.getEventRegistrationId().toString());
@@ -109,6 +108,5 @@ public class EventRegistrationService {
                 })
                 .orElse(false);
     }
-
 
 }

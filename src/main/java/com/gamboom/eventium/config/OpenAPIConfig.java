@@ -16,4 +16,5 @@ public class OpenAPIConfig { // Responsible for configuring OpenAPI (Swagger) do
                         .version("1.0")
                         .description("API for managing users, events, and registrations"));
     }
+
 }

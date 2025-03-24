@@ -1,6 +1,5 @@
 package com.gamboom.eventium.service;
 
-import aj.org.objectweb.asm.commons.Remapper;
 import com.gamboom.eventium.model.Role;
 import com.gamboom.eventium.model.User;
 import com.gamboom.eventium.repository.UserRepository;
@@ -58,11 +57,13 @@ public class UserService {
         Optional<User> existingUser = userRepository.findByEmail(email);
 
         if (existingUser.isPresent()) {
+
             // Update existing user
             User user = existingUser.get();
             user.setName(oauth2User.getAttribute("name"));
             return userRepository.save(user);
         } else {
+
             // Create new user
             User newUser = new User();
             newUser.setEmail(email);
@@ -74,6 +75,7 @@ public class UserService {
     }
 
     private boolean isStaff(String email) {
+
         // Define a list of staff emails (or fetch from a database)
         return List.of("staff1@example.com", "staff2@example.com").contains(email);
     }

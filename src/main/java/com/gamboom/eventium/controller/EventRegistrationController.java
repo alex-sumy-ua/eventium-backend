@@ -1,6 +1,5 @@
 package com.gamboom.eventium.controller;
 
-import com.gamboom.eventium.model.EventRegistration;
 import com.gamboom.eventium.service.EventRegistrationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

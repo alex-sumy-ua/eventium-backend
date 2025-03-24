@@ -2,7 +2,6 @@ package com.gamboom.eventium.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import net.minidev.json.annotate.JsonIgnore;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -34,8 +33,6 @@ public class Event {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    // Getters and Setters
 
     public UUID getEventId() {
         return eventId;
@@ -105,4 +102,5 @@ public class Event {
     public void setCreated_by(UUID createdBy) {
         this.createdBy = createdBy;
     }
+
 }

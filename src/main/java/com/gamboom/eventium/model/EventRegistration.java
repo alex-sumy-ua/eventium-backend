@@ -28,8 +28,6 @@ public class EventRegistration {
     @Column(name = "registration_time")
     private LocalDateTime registrationTime;
 
-    // Getters and Setters
-
     public UUID getEventRegistrationId() {
         return eventRegistrationId;
     }
