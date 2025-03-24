@@ -210,9 +210,17 @@ This backend meets all MVP requirements:
 ✅ Fully documented with Swagger
 
 
-##  ✨ Optional Extensions
+## ✨ Optional Extensions
 
-✅ Spring Security implement full authentication using the Spring Security framework for secure communication between the backend API and frontend Android app
+✅ Spring Security implement full authentication using the Spring Security framework for secure communication between the backend API and frontend Android app (done)
+
+## ✨ Future Work
+
+- Payment integration (e.g. Google Pay)
+
+- Social media sharing of events
+
+- Push notifications for reminders
 
 
 ## 💼 License
