@@ -204,9 +204,9 @@ Go to GitHub Developer Settings.
 
 Create a new OAuth app with the following details:
 
-Homepage URL: http://localhost:8080
+Homepage URL: http://localhost:8080/api/events
 
-Authorization callback URL: http://localhost:8080/login/oauth2/code/github
+Authorization callback URL: http://10.0.2.2:8080/login/oauth2/code/github
 
 Save the Client ID and Client Secret.
 
