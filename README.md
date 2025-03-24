@@ -18,7 +18,6 @@ OAuth2 login via GitHub ensures secure authentication.
 
 This backend REST API is built using Java 17, Spring Boot, and PostgreSQL. It is fully documented via Swagger/OpenAPI.
 
-
 ## 📊 Technologies Used
 
 Core Stack
@@ -30,7 +29,6 @@ Spring Boot
 PostgreSQL
 
 Maven
-
 
 ### 📊 Backend Subsystems
 
@@ -46,7 +44,6 @@ Swagger / OpenAPI
 
 RESTful API architecture
 
-
 ### 📊 Dev Tools
 
 IntelliJ IDEA
@@ -60,7 +57,6 @@ Git & GitHub
 NeonDB (PostgreSQL hosting)
 
 dbdiagram.io (for ER diagram)
-
 
 ### 📊 Frontend Tech (paired with backend)
 
@@ -114,7 +110,6 @@ spring.security.oauth2.client.registration.github.client-secret=your-client-secr
 spring.security.oauth2.client.registration.github.scope=read:user,user:email
 spring.security.oauth2.client.registration.github.redirect-uri={baseUrl}/login/oauth2/code/{registrationId}
 ```
-
 
 ### 📊 Security Configuration
 
@@ -220,11 +215,11 @@ This backend meets all MVP requirements:
 ✅ Spring Security implement full authentication using the Spring Security framework for secure communication between the backend API and frontend Android app
 
 
-
 ## 💼 License
 
-This project is for educational/demo purposes only. MIT-style license can be added if publishing publicly.
-
+This project was developed as a one-month individual contract for Northcoders.
+It is intended for educational and demonstration purposes only, but it is fully functional application and can be used for the purposes described in the Project Summary.
+If publishing publicly, you may consider adding an open-source license (e.g., MIT) after discussing with the stakeholders.
 
 
 ## 📅 Author
