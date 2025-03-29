@@ -50,7 +50,7 @@ public class EventService {
     }
 
     public Optional<Event> getEventById(UUID id) {
-        return Optional.of(eventRepository.getReferenceById(id));
+        return Optional.ofNullable(eventRepository.findById(id).orElse(null));
     }
 
     public Event updateEvent(UUID id, Event eventDetails) {

@@ -7,9 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class DatabaseConnectionTest {
@@ -18,15 +17,14 @@ public class DatabaseConnectionTest {
     private DataSource dataSource;
 
     @Test
-    @DisplayName("For testing Neon DB Connection")
-    void testDatabaseConnection() {
-        try (Connection connection = dataSource.getConnection()) {
-            assertNotNull(connection);
-            System.out.println("Connection successful: " + connection.getCatalog());
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Database connection failed.");
-        }
+    @DisplayName("Verify Neon and H2 Database Connection")
+    void testH2_NeonDatabaseConnection() {
+        assertDoesNotThrow(() -> {
+            try (Connection connection = dataSource.getConnection()) {
+                assertNotNull(connection);
+                assertFalse(connection.isClosed());
+            }
+        });
     }
 
 }

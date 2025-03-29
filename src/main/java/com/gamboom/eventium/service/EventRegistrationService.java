@@ -6,6 +6,7 @@ import com.gamboom.eventium.model.User;
 import com.gamboom.eventium.repository.EventRegistrationRepository;
 import com.gamboom.eventium.repository.EventRepository;
 import com.gamboom.eventium.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -67,7 +68,8 @@ public class EventRegistrationService {
     public Map<String, Object> getRegistrationById(UUID id) {
         return eventRegistrationRepository.findById(id)
                 .map(this::formatResponse)
-                .orElseThrow(() -> new RuntimeException("Event registration not found"));
+//                .orElseThrow(() -> new RuntimeException("Event registration not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Event registration not found"));
     }
 
     public Map<String, Object> updateRegistration(UUID id, Map<String, Object> updates) {
