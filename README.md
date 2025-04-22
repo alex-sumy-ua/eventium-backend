@@ -244,6 +244,32 @@ It is intended for educational and demonstration purposes only, but it is fully 
 If publishing publicly, you may consider adding an open-source license (e.g., MIT) after discussing with the stakeholders.
 
 
+## 💼 Docker Setup
+
+To build and run the backend with Docker:
+
+### 1. Build the Docker image:
+```
+docker build -t event-platform-backend .
+```
+
+### 2. Run the Docker container:
+```
+docker run -p 8080:8080 event-platform-backend
+```
+
+This will expose the backend API on http://localhost:8080.
+```
+Note: The app uses GitHub OAuth, so make sure you’ve configured the correct GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, and REDIRECT_URI in your environment variables.
+```
+
+## 💼 Demo Video
+
+Check out the short YouTube demo showing how the Dockerized backend works with the Android app:
+
+https://www.youtube.com/watch?v=YOUR_VIDEO_ID
+
+
 ## 📅 Author
 
 ### Oleksandr Plachkovskyi (Northcoders student, consultant)
