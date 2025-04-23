@@ -267,7 +267,7 @@ Note: The app uses GitHub OAuth, so make sure you’ve configured the correct GI
 
 Check out the short YouTube demo showing how the Dockerized backend works with the Android app:
 
-https://www.youtube.com/watch?v=YOUR_VIDEO_ID
+[Eventium Video Overview](https://youtu.be/YNRGVrig-DU)
 
 
 ## 📅 Author
